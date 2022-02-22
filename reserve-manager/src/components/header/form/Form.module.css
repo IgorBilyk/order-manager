@@ -1,0 +1,13 @@
+
+.formWrapper{
+   
+}
+.form{
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    }
+    input[type="textarea"]{
+    height: 7rem;    
+    width: 100%;
+    }

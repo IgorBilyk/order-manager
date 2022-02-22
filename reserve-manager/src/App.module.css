@@ -1,0 +1,8 @@
+.app{
+    background-color: rgb(39, 38, 38);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
