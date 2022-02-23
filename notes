@@ -1,0 +1,9 @@
+//
+table N => 1
+name => jorge
+persons => 1
+date/hour => day
+phone => 902123113
+info => text
+
+// 
