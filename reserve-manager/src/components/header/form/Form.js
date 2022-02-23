@@ -18,16 +18,21 @@ function FormWrapper() {
     table: "",
     persons: "",
     notes: "",
-    date: "",
+    date: null,
     bookingDate: "",
     time: "",
     name: "",
     phone: "",
   });
-  const time = moment().format("YYYY-MM-DDThh:mm");
-
+  const time = moment().format("DD/MM/YYYY");
+  console.log();
   const handleFormChange = (e) => {
-    setOrder({ ...orders, [e.target.name]: e.target.value, date: time });
+    setOrder({
+      ...orders,
+      [e.target.name]: e.target.value,
+      date: time,
+    });
+    console.log(orders);
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();

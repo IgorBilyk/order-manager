@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { BsFillPrinterFill } from "react-icons/bs";
 
 import { Link } from "react-router-dom";
 import styles from "./Reserves.module.css";
@@ -16,15 +19,18 @@ export default function Reserves() {
 
   const tables = orders.map((order) => <li>{order.table}</li>);
   const output = orders.map((order) => (
-    <tr>
+    <tr key={order._id}>
       <th scope="row">{order.table}</th>
       <td>{order.name}</td>
       <td>{order.persons}</td>
       <td>
-        {order.date}
-        {order.time}
+        {order.bookingDate.slice(0, 10)} {order.time}
       </td>
-      <td>{order.phone}</td>
+      <td>
+        <a className={styles.link} href="tel:{order.phone}">
+          {order.phone}
+        </a>
+      </td>
       <td>{order.notes}</td>
     </tr>
   ));
@@ -34,8 +40,18 @@ export default function Reserves() {
         <Link to="/" className={styles.link}>
           Home
         </Link>
+        <a href="#">
+          <BsFillPrinterFill onClick={() => window.print()} />
+        </a>
       </nav>
       <h2>Reservas</h2>
+      <input
+        type="text"
+        className="form-control "
+        id="search"
+        placeholder="Pesquisar..."
+        
+      />
       <table className="table table-sm  table-hover">
         <thead>
           <tr>
@@ -47,27 +63,7 @@ export default function Reserves() {
             <th scope="col">Informação</th>
           </tr>
         </thead>
-        <tbody>
-          {output}
-          {/* <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr> */}
-        </tbody>
+        <tbody>{output}</tbody>
       </table>
     </main>
   );

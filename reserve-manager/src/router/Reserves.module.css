@@ -1,7 +1,23 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+nav a {
+    text-decoration: none;
+    color: #000;
+    margin: .5rem;
+}
+nav a:hover {
+    text-decoration: none;
+    color: rgb(56, 55, 55);
+}
 .link{
     text-decoration: none;
     color: #000;
 }
 .link:hover{
-    color: grey;
+    color: rgb(61, 60, 60);
+}
+#search{
+    width: 50% !important;
 }

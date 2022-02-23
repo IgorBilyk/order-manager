@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
   table: {
-    type: String,
+    type: Number,
     required: true,
   },
   persons: {
@@ -13,7 +13,7 @@ const OrderSchema = new mongoose.Schema({
     type: String,
   },
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   bookingDate: {
