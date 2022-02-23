@@ -11,6 +11,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function FormWrapper() {
   const navigate = useNavigate();
 
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [orders, setOrder] = useState({
     table: "",
     persons: "",
@@ -18,6 +21,8 @@ function FormWrapper() {
     date: "",
     bookingDate: "",
     time: "",
+    name: "",
+    phone: "",
   });
   const time = moment().format("YYYY-MM-DDThh:mm");
 
@@ -35,7 +40,8 @@ function FormWrapper() {
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
     setOrder({
       table: "",
       persons: "",
@@ -43,6 +49,8 @@ function FormWrapper() {
       date: "",
       bookingDate: "",
       time: "",
+      name: "",
+      phone: "",
     });
     /* navigate("/reserves"); */
   };
@@ -70,9 +78,10 @@ function FormWrapper() {
           required
         />
       </label>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3" /*  controlId="table" */>
         <Form.Label>Mesa #</Form.Label>
         <Form.Control
+          id="table"
           type="number"
           placeholder="Numero de mesa"
           maxLength="4"
@@ -84,9 +93,10 @@ function FormWrapper() {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3">
         <Form.Label>Numero das Pessoas</Form.Label>
         <Form.Control
+          id="person"
           type="number"
           placeholder="Numero das Pessoas"
           name="persons"
@@ -95,9 +105,33 @@ function FormWrapper() {
           required
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+      <Form.Group className="mb-3">
+        <Form.Label>Nome</Form.Label>
+        <Form.Control
+          id="name"
+          type="text"
+          placeholder="Nome"
+          name="name"
+          value={orders.name}
+          onChange={handleFormChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Phone</Form.Label>
+        <Form.Control
+          id="phone"
+          type="number"
+          placeholder="Phone"
+          name="phone"
+          value={orders.phone}
+          onChange={handleFormChange}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
         <Form.Label>Informaçao</Form.Label>
         <Form.Check
+          id="text"
           className={styles.textarea}
           type="textarea"
           placeholder="Texto..."
@@ -108,7 +142,7 @@ function FormWrapper() {
         />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Guardar
+        {loading ? "Loading..." : "Enviar"}
       </Button>
     </Form>
   );

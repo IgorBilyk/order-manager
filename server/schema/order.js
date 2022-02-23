@@ -24,5 +24,12 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: Number,
+  },
 });
 module.exports = mongoose.model("Order", OrderSchema);

@@ -34,6 +34,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use("/static", express.static(__dirname + "./public"));
 
+//Add order to DB
 app.post("/reserves", (req, res) => {
   console.log(req.body);
   const order = new Order(req.body);
@@ -41,5 +42,11 @@ app.post("/reserves", (req, res) => {
     .then((order) => res.json(user))
     .catch((error) => res.json(error));
 });
-
+//Get all orders fro DB
+app.get("/reserves", async (req, res) => {
+  const allOrders = await Order.find({});
+  
+  res.send(allOrders);
+  console.log(allOrders);
+});
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
