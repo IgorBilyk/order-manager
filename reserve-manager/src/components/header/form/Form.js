@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
+import { useNavigate } from "react-router";
 
 import styles from "./Form.module.css";
 //Bootstrap
@@ -8,6 +9,8 @@ import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function FormWrapper() {
+  const navigate = useNavigate();
+
   const [orders, setOrder] = useState({
     table: "",
     persons: "",
@@ -24,6 +27,15 @@ function FormWrapper() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log(orders);
+    fetch("http://localhost:3001/reserves", {
+      method: "POST",
+      body: JSON.stringify(orders),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
     setOrder({
       table: "",
       persons: "",
@@ -32,6 +44,7 @@ function FormWrapper() {
       bookingDate: "",
       time: "",
     });
+    /* navigate("/reserves"); */
   };
 
   return (
