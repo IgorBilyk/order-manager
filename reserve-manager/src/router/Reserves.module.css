@@ -21,3 +21,13 @@ nav a:hover {
 #search{
     width: 50% !important;
 }
+.sortByName{
+    border: none;
+    outline: none;
+    background-color: #fff;
+    font-weight: bold;
+}
+.tableRow:hover{
+    color: red;
+    cursor: pointer;
+}

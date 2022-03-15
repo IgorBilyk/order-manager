@@ -32,12 +32,11 @@ function FormWrapper() {
       [e.target.name]: e.target.value,
       date: time,
     });
-    console.log(orders);
+
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(orders);
-    fetch("http://localhost:3001/reserves", {
+    fetch("http://localhost:3001/add", {
       method: "POST",
       body: JSON.stringify(orders),
       headers: {
@@ -57,7 +56,7 @@ function FormWrapper() {
       name: "",
       phone: "",
     });
-    /* navigate("/reserves"); */
+   
   };
 
   return (
@@ -83,7 +82,7 @@ function FormWrapper() {
           required
         />
       </label>
-      <Form.Group className="mb-3" /*  controlId="table" */>
+      <Form.Group className="mb-3" >
         <Form.Label>Mesa #</Form.Label>
         <Form.Control
           id="table"
@@ -147,7 +146,7 @@ function FormWrapper() {
         />
       </Form.Group>
       <Button variant="primary" type="submit">
-        {loading ? "Loading..." : "Enviar"}
+        { "Enviar"}
       </Button>
     </Form>
   );
