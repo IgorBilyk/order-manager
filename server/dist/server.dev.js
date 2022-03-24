@@ -55,9 +55,6 @@ app.post("/add", function (req, res) {
   })["catch"](function (err) {
     return res.status(400).json("Error: ".concat(err));
   });
-  /*  Order.create(order)
-    .then((order) => res.json(order))
-    .catch((error) => res.json(error)); */
 }); //Get all orders fro DB
 
 app.get("/reserves", function _callee(req, res) {
@@ -81,13 +78,27 @@ app.get("/reserves", function _callee(req, res) {
   });
 }); //Get specific user
 
-app.get("/:value", function (req, res) {
-  var regex = new RegExp(req.params.value, "i");
-  res.send(req.params.value);
-  console.log(req.params.value);
-  var order = Order.find({});
-  console.log(order);
-  res.send(order);
+app.get("/:id", function _callee2(req, res) {
+  var id, order;
+  return regeneratorRuntime.async(function _callee2$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          id = req.params._id;
+          _context2.next = 3;
+          return regeneratorRuntime.awrap(Order.findOne(id));
+
+        case 3:
+          order = _context2.sent;
+          console.log(order);
+          res.status(200).send(order);
+
+        case 6:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  });
 }); //Delete individual post
 
 app["delete"]("/:id", function (req, res) {
@@ -96,6 +107,14 @@ app["delete"]("/:id", function (req, res) {
     return res.json("Exercise deleted.");
   })["catch"](function (err) {
     return res.status(400).json("Error ".concat(err));
+  });
+}); //Update individual order
+
+app.put("/update/:id", function (req, res) {
+  Order.findByIdAndUpdate({
+    _id: req.params.id
+  }, req.body).then(function (response) {
+    res.send(response);
   });
 });
 app.listen(PORT, function () {

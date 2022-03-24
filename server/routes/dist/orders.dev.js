@@ -1,6 +1,6 @@
 "use strict";
 
-var router = require("express").Router(); //Gt user chema
+var router = require("express").Router(); //Get order user schema
 
 
 var Order = require("../schema/order");

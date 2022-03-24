@@ -31,3 +31,28 @@ nav a:hover {
     color: red;
     cursor: pointer;
 }
+.notFound{
+    margin: 2rem 0 0 0 ;
+    text-align: center;
+    font-weight: bold;
+}
+.notFound a {
+    text-decoration: none;
+    color: #000;
+    border: #000 1px solid ;
+    padding: .3rem;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    transition: .3s ease;
+    -webkit-transition: .3s ease;
+    -moz-transition: .3s ease;
+    -ms-transition: .3s ease;
+    -o-transition: .3s ease;
+}
+.notFound a:hover{
+    color: rgb(98, 97, 97);
+    box-shadow: 5px 9px 15px rgb(202, 202, 202);
+}

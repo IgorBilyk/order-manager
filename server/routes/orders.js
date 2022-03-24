@@ -1,5 +1,5 @@
 const router = require("express").Router();
-//Gt user chema
+//Get order user schema
 const Order = require("../schema/order");
 
 /* app.use(express.static("public"));

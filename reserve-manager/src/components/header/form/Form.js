@@ -142,7 +142,7 @@ function FormWrapper() {
           name="notes"
           value={orders.notes}
           onChange={handleFormChange}
-          required
+          
         />
       </Form.Group>
       <Button variant="primary" type="submit">

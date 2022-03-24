@@ -54,25 +54,18 @@ app.post("/add", (req, res) => {
     .save()
     .then(() => res.json("Order added !"))
     .catch((err) => res.status(400).json(`Error: ${err}`));
-  /*  Order.create(order)
-    .then((order) => res.json(order))
-    .catch((error) => res.json(error)); */
 });
 //Get all orders fro DB
 app.get("/reserves", async (req, res) => {
   const allOrders = await Order.find({});
-
   res.send(allOrders);
 });
 //Get specific user
-app.get(`/:value`, (req, res) => {
-  const regex = new RegExp(req.params.value, "i");
-  res.send(req.params.value);
-  console.log(req.params.value);
-  const order = Order.find({});
-
+app.get(`/:id`, async (req, res) => {
+  const id = req.params._id;
+  const order = await Order.findOne(id);
   console.log(order);
-  res.send(order);
+  res.status(200).send(order);
 });
 //Delete individual post
 app.delete(`/:id`, (req, res) => {
@@ -80,5 +73,12 @@ app.delete(`/:id`, (req, res) => {
   Order.findByIdAndDelete(id)
     .then(() => res.json("Exercise deleted."))
     .catch((err) => res.status(400).json(`Error ${err}`));
+});
+
+//Update individual order
+app.put("/update/:id", (req, res) => {
+  Order.findByIdAndUpdate({ _id: req.params.id }, req.body).then((response) => {
+    res.send(response);
+  });
 });
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

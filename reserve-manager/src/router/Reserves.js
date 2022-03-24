@@ -5,13 +5,18 @@ import { BsFillPrinterFill } from "react-icons/bs";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai"; //AiOutlineArrowDown
 
 import { Link } from "react-router-dom";
+
+import Popup from "../components/popup/Popup";
+
 import styles from "./Reserves.module.css";
 
 export default function Reserves() {
   const [orders, setOrders] = useState([]);
   const [count, setCount] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
-  const [search, setSearch] = useState(null);
+  const [isEditClicked, setIsEditClicked] = useState(false);
+  const [editedOrder, setEditedOrder] = useState();
+  const [id, setId] = useState();
 
   //Get all orders once page is loading
   useEffect(() => {
@@ -52,6 +57,7 @@ export default function Reserves() {
     outputHandler();
   }, [count]);
 
+  //Search by date
   const handleSearchDate = (e) => {
     fetch(`http://localhost:3001/${e.target.value}`, {
       method: "GET",
@@ -65,7 +71,8 @@ export default function Reserves() {
       })
       .catch((error) => console.log(error));
   };
-  const handleDelete = (e, id) => {
+  //Delete individual order
+  const handleDelete = (id) => {
     console.log(id);
     fetch(`http://localhost:3001/${id}`, {
       method: "DELETE",
@@ -80,6 +87,49 @@ export default function Reserves() {
       })
       .catch((error) => console.log(error));
   };
+  //Open edit popup and get edited order data
+  const handleEdit = (id) => {
+    setId(id);
+    /* fetch(`http://localhost:3001/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setEditedOrder(data);
+      })
+      .catch((error) => console.log(error)); */
+
+    setIsEditClicked(true);
+  };
+  //Close Edit popup
+  const closeEditPopup = () => {
+    setIsEditClicked(false);
+  };
+
+  //Update order (edit order)
+  const changeEditOrder = (data) => {
+    /*  fetch(`http://localhost:3001/update/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setOrders(data);
+        setCount((prevCount) => prevCount + 1);
+      })
+      .catch((error) => console.log(error)); */
+  };
+  const increaseCount = () => {
+    if (count > 100) return setCount(0);
+    setCount((prevCount) => prevCount + 1);
+  };
+  //Get all orders
   const fetchAllOrders = () => {
     fetch("http://localhost:3001/reserves")
       .then((response) => response.json())
@@ -93,17 +143,22 @@ export default function Reserves() {
     const output = orders.map((order) => (
       <tr className={styles.tableRow} key={order._id}>
         <th className={styles.nameRow}>
-          <a
-            href="#"
+          <button
             className="btn btn-sm btn-danger"
-            onClick={() => handleDelete(1, order._id)}
+            onClick={() => handleDelete(order._id)}
           >
             Delete
-          </a>
+          </button>
+          <button
+            className="btn btn-sm btn-primary mx-2"
+            onClick={() => handleEdit(order._id)}
+          >
+            Edit
+          </button>
         </th>
         <th scope="row">{order.table}</th>
-        <td>{order.name}</td>
         <td>{order.persons}</td>
+        <td>{order.name}</td>
         <td>
           {order.bookingDate.slice(0, 10)} {order.time}
         </td>
@@ -115,11 +170,20 @@ export default function Reserves() {
         <td>{order.notes}</td>
       </tr>
     ));
+
     return output;
   };
-
+  console.log(count);
   return (
     <main>
+      {isEditClicked && (
+        <Popup
+          closeEditPopup={closeEditPopup}
+          /* editedOrder={editedOrder} */ changeEditOrder={changeEditOrder}
+          increaseCount={increaseCount}
+          id={id}
+        />
+      )}
       <nav>
         <Link to="/" className={styles.link}>
           Home
@@ -136,6 +200,7 @@ export default function Reserves() {
           <tr>
             <th scope="col"></th>
             <th scope="col">Mesa</th>
+            <th scope="col">N# Pessoas</th>
             <th scope="col">
               <button onClick={sortByName} className={styles.sortByName}>
                 {isClicked ? <AiOutlineArrowUp /> : <AiOutlineArrowDown />}
@@ -143,7 +208,6 @@ export default function Reserves() {
               </button>
             </th>
 
-            <th scope="col">N# Pessoas</th>
             <th scope="col">Dia/hora</th>
             <th scope="col">Phone</th>
             <th scope="col">Informação</th>
@@ -151,6 +215,13 @@ export default function Reserves() {
         </thead>
         <tbody>{outputHandler()}</tbody>
       </table>
+      {!orders.length ? (
+        <p className={styles.notFound}>
+          No items found. <Link to="/">Add new order</Link>
+        </p>
+      ) : (
+        ""
+      )}
     </main>
   );
 }
