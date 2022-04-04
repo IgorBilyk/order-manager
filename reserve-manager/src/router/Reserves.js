@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BsFillPrinterFill } from "react-icons/bs";
-import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai"; //AiOutlineArrowDown
+import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 
 import { Link } from "react-router-dom";
 
@@ -14,13 +14,16 @@ export default function Reserves() {
   const [orders, setOrders] = useState([]);
   const [count, setCount] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isEditClicked, setIsEditClicked] = useState(false);
   const [editedOrder, setEditedOrder] = useState();
   const [id, setId] = useState();
 
   //Get all orders once page is loading
   useEffect(() => {
+    setIsLoading(true);
     fetchAllOrders();
+    setIsLoading(false);
   }, [count]);
 
   //Handle sort by name once 'Nome' button is clicked
@@ -59,7 +62,8 @@ export default function Reserves() {
 
   //Search by date
   const handleSearchDate = (e) => {
-    fetch(`http://localhost:3001/${e.target.value}`, {
+    console.log(new Date(e.target.value));
+    /* fetch(`http://localhost:3001/${e.target.value}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +73,7 @@ export default function Reserves() {
       .then((data) => {
         console.log(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error)); */
   };
   //Delete individual order
   const handleDelete = (id) => {
@@ -179,7 +183,7 @@ export default function Reserves() {
       {isEditClicked && (
         <Popup
           closeEditPopup={closeEditPopup}
-          /* editedOrder={editedOrder} */ changeEditOrder={changeEditOrder}
+          changeEditOrder={changeEditOrder}
           increaseCount={increaseCount}
           id={id}
         />
@@ -215,6 +219,7 @@ export default function Reserves() {
         </thead>
         <tbody>{outputHandler()}</tbody>
       </table>
+      {isLoading ? "Loading..." : ""}
       {!orders.length ? (
         <p className={styles.notFound}>
           No items found. <Link to="/">Add new order</Link>

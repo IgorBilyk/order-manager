@@ -39,13 +39,15 @@ app.use("/static", express.static(__dirname + "./public"));
 
 //Add order to DB
 app.post("/add", (req, res) => {
-  console.log(req.body);
+  console.log(Date.parse(req.body.bookingDate));
+  const bookingDate = req.body.bookingDate;
+
   const order = new Order({
     table: req.body.table,
     persons: req.body.persons,
     notes: req.body.notes,
     date: req.body.date,
-    bookingDate: Date.parse(req.body.bookingDate),
+    bookingDate,
     time: req.body.time,
     name: req.body.name,
     phone: req.body.phone,

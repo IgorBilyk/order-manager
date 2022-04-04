@@ -16,7 +16,7 @@ function FormWrapper() {
 
   const [orders, setOrder] = useState({
     table: "",
-    persons: "",
+    persons: "1",
     notes: "",
     date: null,
     bookingDate: "",
@@ -32,7 +32,6 @@ function FormWrapper() {
       [e.target.name]: e.target.value,
       date: time,
     });
-
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +55,6 @@ function FormWrapper() {
       name: "",
       phone: "",
     });
-   
   };
 
   return (
@@ -82,7 +80,7 @@ function FormWrapper() {
           required
         />
       </label>
-      <Form.Group className="mb-3" >
+      <Form.Group className="mb-3">
         <Form.Label>Mesa #</Form.Label>
         <Form.Control
           id="table"
@@ -104,6 +102,7 @@ function FormWrapper() {
           type="number"
           placeholder="Numero das Pessoas"
           name="persons"
+          min="1"
           value={orders.persons}
           onChange={handleFormChange}
           required
@@ -128,6 +127,7 @@ function FormWrapper() {
           type="number"
           placeholder="Phone"
           name="phone"
+          min="1"
           value={orders.phone}
           onChange={handleFormChange}
         />
@@ -142,11 +142,10 @@ function FormWrapper() {
           name="notes"
           value={orders.notes}
           onChange={handleFormChange}
-          
         />
       </Form.Group>
       <Button variant="primary" type="submit">
-        { "Enviar"}
+        {"Enviar"}
       </Button>
     </Form>
   );

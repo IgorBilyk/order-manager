@@ -39,13 +39,14 @@ var PORT = process.env.PORT || 3001;
 app.use("/static", express["static"](__dirname + "./public")); //Add order to DB
 
 app.post("/add", function (req, res) {
-  console.log(req.body);
+  console.log(Date.parse(req.body.bookingDate));
+  var bookingDate = req.body.bookingDate;
   var order = new Order({
     table: req.body.table,
     persons: req.body.persons,
     notes: req.body.notes,
     date: req.body.date,
-    bookingDate: Date.parse(req.body.bookingDate),
+    bookingDate: bookingDate,
     time: req.body.time,
     name: req.body.name,
     phone: req.body.phone
